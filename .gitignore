@@ -3,3 +3,4 @@ venv/*
 models/*
 __pycache__
 TODO
+*.pkl

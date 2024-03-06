@@ -57,13 +57,15 @@ class Modelselector():
             "age": 30,
         }
         '''
-        y_out = pd.DataFrame(columns = self.features)
+        query_flow = data.pop(0)
+        q_flow = {key:[val] for key, val in query_flow.items()}
+        y_out = pd.DataFrame(q_flow, columns = self.features)
+        
         for query_flow in data:
-            q_flow = {key:[val] for key, val in query_flow.items()}
-            # features_index = [f"feature {i}" for i,_ in enumerate(query_flow)]
             
+            q_flow = {key:[val] for key, val in query_flow.items()}
             flow_df = pd.DataFrame(q_flow)
-            y_out = pd.concat([y_out, flow_df[self.features]], axis = 0)
+            y_out = pd.concat([y_out, flow_df], axis = 0)
             
 
         
