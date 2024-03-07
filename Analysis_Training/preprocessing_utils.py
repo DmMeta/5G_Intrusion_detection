@@ -70,8 +70,8 @@ def fill_nan_values(df, method='mean'):
         'median': df[numeric_cols].median
     }
     
-    numeric_cols_mean = fill_method[method]()
-    df[numeric_cols] = df[numeric_cols].fillna(numeric_cols_mean)
+    numeric_cols_fill_values = fill_method[method]()
+    df[numeric_cols] = df[numeric_cols].fillna(numeric_cols_fill_values)
 
     #iloc[0] is used to get the first element of the series in case there is more than one category that produces 
     # the same mode.
