@@ -3,11 +3,15 @@ FROM python:latest
 RUN pip3 install --upgrade pip
 RUN pip3 install uvicorn fastapi[all] 
 
+
 RUN mkdir -p /opt/model_server/src/
 RUN mkdir -p /opt/model_server/models/
 WORKDIR /opt/model_server
 COPY models/ models/
 WORKDIR /opt/model_server/src/
+COPY src/ .
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
 
 EXPOSE 8891
 

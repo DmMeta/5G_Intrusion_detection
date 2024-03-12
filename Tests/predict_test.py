@@ -6,14 +6,15 @@ from sklearn.metrics import classification_report
 import numpy as np
 from sklearn.utils import shuffle
 import random as rnd
-PREDICT_ENDPOINT = 'http://localhost:8891/predict'
+#predict endpoint
+PREDICT_ENDPOINT = 'http://<ip>:<port>/predict'
 SLICE = 15000
 
 
 
 def main():
-    X_test = pd.read_csv('/home/dimet/Documents/Dimitris/ceid/5G_Intrusion_detection/data/test_sample2.csv')
-    y_test = pd.read_csv('/home/dimet/Documents/Dimitris/ceid/5G_Intrusion_detection/data/test_sample2_target.csv')
+    X_test = pd.read_csv('../data/test_sample2.csv')
+    y_test = pd.read_csv('../data/test_sample2_target.csv')
     
     X_test_shuffled, y_test_shuffled = shuffle(X_test, y_test, random_state=rnd.randint(0,len(y_test)))
     flow_request = {
