@@ -16,6 +16,7 @@ class Modelselector():
     model_preferences = {
         "RandomForest": RandomForestClassifier,
         "DecisionTree": DecisionTreeClassifier,
+        "ANN": None
     }
     
     def __init__(self, model_name):
@@ -35,7 +36,7 @@ class Modelselector():
     def _select_model(self):
         
         try:
-            model = Modelselector.model_preferences[self.model_name]()
+            # model = Modelselector.model_preferences[self.model_name]()
             filePath = os.path.join("../models",f"{self.model_name}.pkl")
             model = joblib.load(filePath)
             
@@ -57,16 +58,15 @@ class Modelselector():
             "age": 30,
         }
         '''
-        query_flow = data.pop(0)
-        q_flow = {key:[val] for key, val in query_flow.items()}
-        y_out = pd.DataFrame(q_flow, columns = self.features)
-        
+        dfs = []
+
         for query_flow in data:
-            
-            q_flow = {key:[val] for key, val in query_flow.items()}
+            q_flow = {key: [val] for key, val in query_flow.items()}
             flow_df = pd.DataFrame(q_flow)
-            y_out = pd.concat([y_out, flow_df], axis = 0)
-            
+            dfs.append(flow_df[self.features])
+
+        y_out = pd.concat(dfs, axis=0)
+                    
 
         
         return y_out
@@ -76,6 +76,20 @@ class Modelselector():
         y = self._preprocess(data)
         
         if self.model is not None:
+            if self.model_name not in ['RandomForest', 'DecisionTreeClassifier']:
+                outputs = self.model.model(y)
+                enc_predictions = (outputs > 0.5).float()
+                try: 
+                    filePath = os.path.join("../models","label_encoder.pkl")
+                    with open(filePath, "rb") as file:
+                        encoder = joblib.load(file)
+                except FileNotFoundError as e:
+                    print(f"{e} \nLabel Encoder Not found!")
+                
+                predictions = encoder.inverse_transform(enc_predictions)
+                print(predictions)
+                return {"Predictions": predictions.tolist()}
+            
             predictions = self.model.predict(y)
              
             return {"Predictions": predictions.tolist()}
