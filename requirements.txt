@@ -1,3 +1,4 @@
+-e git+ssh://git@github.com/DmMeta/5G_Intrusion_detection.git@165c8c7be0ad929cd4bbaf589e4b71dfa7238726#egg=AnalysisTraining
 asttokens==2.4.1
 comm==0.2.1
 contourpy==1.2.0
@@ -44,6 +45,7 @@ parso==0.8.3
 pexpect==4.9.0
 pillow==10.2.0
 platformdirs==4.2.0
+print_versions==0.1.0
 prompt-toolkit==3.0.43
 psutil==5.9.8
 ptyprocess==0.7.0
@@ -52,6 +54,7 @@ Pygments==2.17.2
 pyparsing==3.1.1
 python-dateutil==2.9.0
 pytz==2024.1
+PyYAML==6.0.1
 pyzmq==25.1.2
 scikit-learn==1.4.1.post1
 scipy==1.12.0
