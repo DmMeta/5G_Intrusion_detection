@@ -1,0 +1,17 @@
+ANN:
+  hidden_size: 8
+  input_size: 10
+  output_size: 1
+CNN:
+  classes: 1
+  input_channels: 1
+  input_features: 10
+  kernel_size: 3
+  kernels: 16
+CNN_LSTM:
+  classes: 1
+  input_channels: 1
+  kernel_size: 3
+  kernels: 16
+  lstm_hidden_size: 8
+  lstm_num_layers: 1
