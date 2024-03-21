@@ -1,5 +1,7 @@
--e git+ssh://git@github.com/DmMeta/5G_Intrusion_detection.git@165c8c7be0ad929cd4bbaf589e4b71dfa7238726#egg=AnalysisTraining
 asttokens==2.4.1
+beautifulsoup4==4.12.3
+certifi==2024.2.2
+charset-normalizer==3.3.2
 comm==0.2.1
 contourpy==1.2.0
 cycler==0.12.1
@@ -10,7 +12,9 @@ executing==2.0.1
 filelock==3.13.1
 fonttools==4.49.0
 fsspec==2024.2.0
+gdown==5.1.0
 graphviz==0.20.1
+idna==3.6
 ipykernel==6.29.3
 ipython==8.22.1
 jedi==0.19.1
@@ -52,14 +56,17 @@ ptyprocess==0.7.0
 pure-eval==0.2.2
 Pygments==2.17.2
 pyparsing==3.1.1
+PySocks==1.7.1
 python-dateutil==2.9.0
 pytz==2024.1
 PyYAML==6.0.1
 pyzmq==25.1.2
+requests==2.31.0
 scikit-learn==1.4.1.post1
 scipy==1.12.0
 seaborn==0.13.2
 six==1.16.0
+soupsieve==2.5
 stack-data==0.6.3
 sympy==1.12
 threadpoolctl==3.3.0
@@ -72,4 +79,5 @@ traitlets==5.14.1
 triton==2.2.0
 typing_extensions==4.10.0
 tzdata==2024.1
+urllib3==2.2.1
 wcwidth==0.2.13

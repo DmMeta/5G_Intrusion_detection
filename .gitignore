@@ -1,7 +1,7 @@
 data/*
 venv/*
-models/*
 __pycache__
 TODO
-*.pkl
 *.egg-info
+*.pkl
+models/*
