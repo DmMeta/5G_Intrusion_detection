@@ -6,8 +6,8 @@ from fastapi import (FastAPI,
 from pydantic import BaseModel
 from typing import Dict, List, Union, Any
 import json
-from model import Modelselector 
-
+from model import ModelAdapter
+  
 # with open(os.path.join("../models","top_10_features_cols.pkl"), "rb") as ffile:
 #     features = pickle.load(ffile)
 
@@ -17,7 +17,7 @@ from model import Modelselector
 
 # print(Query.__annotations__.keys())
 
-app = FastAPI()
+app = FastAPI() 
 
 class PredictionQuery(BaseModel):
     model: str
@@ -25,22 +25,6 @@ class PredictionQuery(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
-
-'''
-
-{
-    model: "RandomForest",
-    query: [
-        {
-            "age": 25,
-        },
-        {
-            "age": 30,
-        }
-}
-
-
-'''
 
 
 @app.post("/predict")
@@ -52,11 +36,12 @@ async def predict(pred_request: Request):
     y = pred_request['query']
     print(f"Model: {model_name} Query: {len(y)}")
     
-    model = Modelselector(model_name)
-    
-    prediction = model.predict(y)
-    
-    # prediction_resp = {"Prediction": prediction[0]}
+    try:
+        model = ModelAdapter.select_model(model_name)
+        prediction = model.predict(y)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
     return prediction
 
 @app.get("/health")

@@ -3,22 +3,24 @@ import pandas as pd
 import json
 from pprint import pprint as pp
 from sklearn.metrics import classification_report
+import joblib
 import numpy as np
 from sklearn.utils import shuffle
 import random as rnd
 #predict endpoint
-PREDICT_ENDPOINT = 'http://<ip>:<port>/predict'
+PREDICT_ENDPOINT = 'http://127.0.0.1:8891/predict'
 SLICE = 15000
 
 
 
 def main():
-    X_test = pd.read_csv('../data/test_sample2.csv')
-    y_test = pd.read_csv('../data/test_sample2_target.csv')
+    X_test = pd.read_csv('../data/test_sample.csv')
+    y_test = pd.read_csv('../data/test_sample_labels.csv')
     
     X_test_shuffled, y_test_shuffled = shuffle(X_test, y_test, random_state=rnd.randint(0,len(y_test)))
+    
     flow_request = {
-        "model": "RandomForest",
+        "model": "ANN",
         "query": X_test_shuffled.iloc[:SLICE].to_dict(orient = 'records')
     }
 

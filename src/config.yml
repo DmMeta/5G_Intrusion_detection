@@ -1,17 +1,32 @@
-ANN:
-  hidden_size: 8
-  input_size: 10
-  output_size: 1
-CNN:
-  classes: 1
-  input_channels: 1
-  input_features: 10
-  kernel_size: 3
-  kernels: 16
-CNN_LSTM:
-  classes: 1
-  input_channels: 1
-  kernel_size: 3
-  kernels: 16
-  lstm_hidden_size: 8
-  lstm_num_layers: 1
+features_path: "../models/top_10_features_cols.pkl"
+NN:
+  target_encoder_path: "../models/LabelEncoder.pkl"
+  ANN:
+    input_size: 10
+    hidden_size: 8
+    output_size: 1
+    model_path: "../models/ANN/ANN_model"
+    preprocessor_path: "../models/ANN/ANN_preprocessor.pkl"
+  CNN:
+    classes: 1
+    input_channels: 1
+    input_features: 10
+    kernel_size: 3
+    kernels: 16
+    model_path: "../models/CNN/CNN_model"
+    preprocessor_path: "../models/CNN/CNN_preprocessor.pkl"
+  CNN_LSTM:
+    classes: 1
+    input_channels: 1
+    kernel_size: 3
+    kernels: 16
+    lstm_hidden_size: 8
+    lstm_num_layers: 1
+    model_path: "../models/CNN_LSTM/CNN_LSTM_model"
+    preprocessor_path: "../models/CNN_LSTM/CNN_LSTM_preprocessor.pkl"
+TREE_BASED_MODELS:
+  RandomForest:
+    model_path: "../models/RandomForest/RandomForest.pkl"
+  DecisionTree:
+    model_path: "../models/DecisionTree/DecisionTree.pkl"
+  
