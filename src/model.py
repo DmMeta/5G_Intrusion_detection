@@ -91,14 +91,13 @@ class ANNAdapter(ModelAdapter):
 
     def predict(self, data):
         y = self._preprocess(data)
-
         y_pred = (self.model(y) > 0.5).int()
 
         target_encoder_path = self._config['NN']['target_encoder_path']
         with open(target_encoder_path, "rb") as file:
             t_encoder = joblib.load(file)
         
-        y_pred_labels = t_encoder.inverse_transform(y_pred)
+        y_pred_labels = t_encoder.inverse_transform(y_pred.ravel())
         return {"Predictions": y_pred_labels.tolist()}
 
 
@@ -153,7 +152,7 @@ class CNNAdapter(ModelAdapter):
         with open(target_encoder_path, "rb") as file:
             t_encoder = joblib.load(file)
         
-        y_pred_labels = t_encoder.inverse_transform(y_pred)
+        y_pred_labels = t_encoder.inverse_transform(y_pred.ravel())
         return {"Predictions": y_pred_labels.tolist()}
 
 
@@ -206,14 +205,13 @@ class CNN_LSTMAdapter(ModelAdapter):
 
     def predict(self, data):
         y = self._preprocess(data)
-
         y_pred = (self.model(y) > 0.5).int()
 
         target_encoder_path = self._config['NN']['target_encoder_path']
         with open(target_encoder_path, "rb") as file:
             t_encoder = joblib.load(file)
         
-        y_pred_labels = t_encoder.inverse_transform(y_pred)
+        y_pred_labels = t_encoder.inverse_transform(y_pred.ravel())
         return {"Predictions": y_pred_labels.tolist()}
 
 
