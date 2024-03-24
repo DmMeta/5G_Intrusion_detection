@@ -23,10 +23,10 @@
 * [ANN](#ann)
 * [CNN](#cnn)
 * [CNN-LSTM](#cnn-lstm)
-* [Endpoint using Docker Container](#endpoint-using-docker-container)
-* [K8s Deployment](#k8s-deployment)
-* [Contact](#Contact)
-* [License](#License)
+* [Endpoint Development using Docker Container](#endpoint-development-using-docker-container)
+* [Deployment to K8s Cluster](#deployment-to-k8s-cluster)
+* [Contact](#contact)
+* [License](#license)
 
 
 # About the Project
@@ -63,7 +63,7 @@ Install the required dependencies:
 pip3 install .
 ```
 
->[!TIP]
+>[!IMPORTANT]
 > The test - validation data of the binary classification problem addressed by this repository, along with the pretrained - fitted models, preprocessors, encoders, etc., can be extracted by executing scripts [fetch_data][script-data] and [fetch_models][script-models] located in the [script][script-folder] folder.
 
 # Dataset and Feature Selection
@@ -140,7 +140,7 @@ Next, we standardized numerical features using a process called **Standard Scali
 
 Categorical features were transformed into a numerical format using encoding techniques. Specifically, we employed the **Ordinal Encoder**, which assigns a unique integer to each category within a feature. This conversion ensures that machine learning algorithms can interpret categorical data accurately during model training and evaluation.
 
-Finally, we encapsulated the entire preprocessing process into a streamlined pipeline for easy replication and consistency across different analyses.
+Finally, we encapsulated the entire preprocessing process into a streamlined pipeline for easy replication and consistency across different analysis.
 
 # Random Forest Classifier
 
@@ -150,6 +150,8 @@ Renowned for its **robustness** and **versatility**, Random Forest employs an en
 This formidable algorithm excels in both classification and regression tasks, making it a staple choice across various domains. Its ability to handle complex datasets with ease, along with its resilience to class imbalances, solidifies its status as a go-to solution for predictive modeling like our binary classification problem.
 
 We employed the [Random Forest Classifier][Random-Forest-link] provided by the [scikit-learn][scikit-learn-link] library, a widely-used Python library for machine learning tasks. Indeed, while we didn't fine-tune the parameters extensively in this particular implementation, the scikit-learn Random Forest classifier offers flexibility in parameter configuration. Parameters such as the number of trees in the forest and the maximum depth of each tree can be adjusted to optimize performance for our specific binary classification task if needed. This flexibility allows for further refinement of the model's predictive capabilities based on the characteristics of the dataset and the desired performance metrics.
+
+The visualization of the tree structure resulting from the fit of one of the estimators in the Random Forest Classifier can be found [here][random-forest-classifier-repr].
 
 ## Results
 Following the evaluation of the Random Forest Classifier, we achieved an accuracy of **99.96%**, indicating the proportion of correctly classified instances. The model's performance was further elucidated through the presentation of the **confusion matrix** and the **classification report**. 
@@ -188,11 +190,13 @@ As a result of the very good confusion matrix we obtain the below classification
 # Decision Tree Classifier
 
 ## Characteristics and Structure 
-In addition to the Random Forest, we also implemented the [Decision Tree Classifier][Decision-Tree-link] from the [scikit-learn][scikit-learn-link] library. This classifier operates by recursively partitioning the dataset into subsets based on feature values, constructing a tree-like structure of decision nodes. Despite its simplicity, the Decision Tree Classifier provides valuable insights into the decision-making process, making it particularly useful when interpretability is essential. However, it may be prone to **overfitting**, especially in complex datasets. 
+In addition to the Random Forest, we also implemented the [Decision Tree Classifier][Decision-Tree-link] from the [scikit-learn][scikit-learn-link] library. This classifier operates by recursively partitioning the dataset into subsets based on feature values, constructing a tree-like structure of decision nodes. Despite its simplicity, the Decision Tree Classifier provides valuable insights into the decision-making process, making it particularly useful when **interpretability** is essential. However, it may be prone to **overfitting**, especially in complex datasets. 
 
 Both the Random Forest and Decision Tree classifiers are based on tree-based models. The Random Forest classifier consists of an ensemble of decision trees, each trained on a subset of the dataset in order to improve performance and reduce overfitting. In contrast, the Decision Tree classifier comprises a single tree structure, where each node represents a decision based on a specific feature.
 
 We incorporated both classifiers (Decision Tree and Random Forest) to compare their performance and determine the most suitable model for our specific binary classification task.
+
+The visualization of the tree structure resulting from the fit of the Decision Tree Classifier can be found [here][decision-tree-classifier-repr].
 
 ## Results
 Following the evaluation of the Decision Tree Classifier, we achieved an accuracy of **99.95%**. 
@@ -322,7 +326,7 @@ class ANN_BinaryClassifier(nn.Module):
 
 ## Results
 
-After training the ANN model, we evaluate its performance using various metrics. The accuracy achieved on the test set is approximately **98.7%**, indicating the model's ability to correctly classify samples into their respective classes. Additionally, the loss, a measure of the discrepancy between predicted and actual values, is remarkably low, underscoring the model's effectiveness in capturing the underlying patterns in the data.
+After training the ANN model, we evaluate its performance using various metrics. The accuracy achieved on the test set is approximately **99%**, indicating the model's ability to correctly classify samples into their respective classes. Additionally, the loss, a measure of the discrepancy between predicted and actual values, is remarkably low (**0.0560**), underscoring the model's effectiveness in capturing the underlying patterns in the data.
 
 The [confusion matrix][confusion-matrix-link] and [classification report][classification-report-link] obtained from the evaluation of the ANN model are as follows:
 
@@ -336,11 +340,11 @@ The [confusion matrix][confusion-matrix-link] and [classification report][classi
 ``Classification Report``
 |            | Precision |  Recall  | F1-Score | Support |
 |------------|-----------|----------|----------|---------|
-|   Benign   |   0.976831   |   0.990740  |   0.983736  |  87230  |
-| Malicious  |   0.994095   |   0.985148  |   0.989601  | 155948  |
-|   Accuracy |           |          |   0.987314  | 243178  |
-|  Macro Avg |   0.985463   |   0.987944  |   0.986669  | 243178  |
-| Weighted Avg|  0.987409   |   0.987314  |   0.987330  | 243178  |
+|   Benign   |   0.978771   |   0.997070  |   0.987836  |  94192  |
+| Malicious  |   0.998125   |   0.986328  |   0.992191  | 148986  |
+|   Accuracy |           |          |   0.990488  | 243178  |
+|  Macro Avg |   0.988448   |   0.991699  |   0.990013  | 243178  |
+| Weighted Avg|  0.990629   |   0.990488  |   0.990504  | 243178  |
 
 <br>
 <p align="center">
@@ -370,7 +374,7 @@ Based on the results of the stratified 5-fold cross-validation, we can confident
 
 # CNN
 
-Subsequently, delving into the field of deep learning, we implemented a CNN model. CNN stands for Convolutional Neural Network, which is a type of artificial neural network designed to recognize patterns in given structures, such as images or sounds. Although CNN models are primarily used in applications with images and pattern recognition, we attempted to develop a CNN model that would address the (simple) binary classification problem we have on the input tabular dataset.
+Subsequently, delving into the field of deep learning, we implemented a **CNN** model. CNN stands for **Convolutional Neural Network**, which is a type of artificial neural network designed to recognize patterns in given structures, such as images or sounds. Although CNN models are primarily used in applications with images and pattern recognition, we attempted to develop a CNN model that would address the (simple) binary classification problem we have on the input tabular dataset.
 
 ## Architecture of our CNN model
 
@@ -507,41 +511,158 @@ The graph illustrates the accuracy and loss trends of the convolutional neural n
 
 # CNN-LSTM 
 
+Finally, we attempted to create a model that was a fusion of **CNN** with **RNN (Recurrent Neural Network**). More specifically, we developed a model that among other components included a convolutional layer and an LSTM layer. 
+
+**LSTM  (Long Short-Term Memory)** is a type of RNN architecture, designed to address the vanishing gradient problem encountered in traditional RNNs. It incorporates specialized units called **memory cells** that can maintain information over long sequences, making it particularly effective for tasks involving sequential data such as time series prediction, natural language processing and speech recognition. The LSTM architecture includes gating mechanisms that regulate the flow of information through the cells, enabling it to learn and remember **long-term dependencies** in sequential data.
 
 
+## Architecture of our CNN-LSTM model
+
+Our CNN-LSTM model architecture comprises several essential components:
+
+**Convolutional Layer**: This layer acts as the initial feature extractor, utilizing convolutional filters to scan across the input data and capture local patterns. In our model, we employ a 1-dimensional convolutional layer, suitable for sequential data like time series or text. The layer consists of kernels filters of size ``kernel_size``, which slide over the input data, extracting relevant features.
+
+**Activation Function (Tanh)**: Following the convolutional layer, the hyperbolic tangent (Tanh) activation function introduces non-linearity to the model's output. This non-linear transformation enables the model to capture complex relationships within the data.
+
+**Long Short-Term Memory (LSTM) Layer**: The LSTM layer serves as a powerful sequential model, capable of learning and remembering long-term dependencies within the input data. It processes the features extracted by the convolutional layer over sequential time steps, preserving important information while filtering out irrelevant details. The LSTM layer is defined with ``lstm_hidden_size`` units in its hidden state and ``lstm_num_layers`` stacked LSTM layers.
+
+**Fully Connected Layer**: The output from the LSTM layer, is then fed into a fully connected (FC) layer. FC layers consist of neurons where each neuron is connected to every neuron in the previous layer, which allows the network to learn complex patterns and relationships in the data.
+
+**Output Layer**: The final layer of the CNN-LSTM model, which produces the model's predictions. Given our binary classification problem, the output layer comprises a single neuron with a sigmoid activation function, producing probabilities indicating the likelihood of belonging to the positive class.
+
+The structure of the CNN-LSTM model is depicted in the image below:
+<p align="center">
+ <img src="./images_media/arch_cnn_lstm.png"  alt="CNN-LSTM Architecture" width = 60%>
+    <br>
+    <em><i>Architecture of the CNN-LSTM model</i></em>
+</p>
+<br>
+
+Implementation code of the CNN-LSTM model:
+```python
+class CNN_LSTM_BinaryClassifier(nn.Module):
+    def __init__(self, input_channels=1, kernels=16, kernel_size=3, lstm_hidden_size=8, lstm_num_layers=1, classes=1):
+        '''
+        Convolutional Neural Network (CNN) followed by a Long Short-Term Memory (LSTM) for binary classification.
+
+        Args:
+            input_channels (int): Number of input channels.
+            kernels (int): Number of kernels/filters in the convolutional layer.
+            kernel_size (int): Size of the convolutional kernel.
+            lstm_hidden_size (int): Number of features in the hidden state of the LSTM.
+            lstm_num_layers (int): Number of recurrent layers in the LSTM.
+            classes (int): Number of output classes (default is 1 for binary classification).
+        '''
+        super(CNN_LSTM_BinaryClassifier, self).__init__()
+        self.cnn = nn.Conv1d(in_channels=input_channels, out_channels=kernels, kernel_size=kernel_size)
+        self.tanh = nn.Tanh()
+        self.lstm = nn.LSTM(input_size=kernels, hidden_size=lstm_hidden_size, num_layers=lstm_num_layers, batch_first=True)
+        self.fc = nn.Linear(lstm_hidden_size, classes)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        '''
+        Forward pass of the CNN-LSTM model.
+
+        Args:
+            x (torch.Tensor): Input data tensor.
+
+        Returns:
+            torch.Tensor: Output tensor after passing through the model.
+        '''
+        x = self.cnn(x)
+        x = self.tanh(x)
+        out, _ = self.lstm(x)
+        # Select the last output from the LSTM sequence
+        out = self.fc(out[:, -1, :])
+        # Apply the sigmoid activation function
+        out = self.sigmoid(out)
+
+        return out
+```
+
+## Model Parameters
+
+**Input Channels**: Typically set to **1** for tabular data, representing the number of input channels.
+
+**Kernels**: The count of kernels or filters in the convolutional layer, dictating the depth of feature maps learned by the network. We have **16** kernels in our convolutional layer.
+
+**Kernel Size**: Specifies the size of convolutional kernels, determining the receptive field over input data. Each kernel has a size of **3**.
+
+**LSTM Hidden Size**: The number of features in the hidden state of the LSTM. We set it to **8**.
+
+**LSTM Number of Layers**: The number of recurrent layers in the LSTM. We have **1** layer.
+
+**Input Features**: The input features correspond to the number of features in the input data. It was determined based on the dimensionality of the input features provided to the model (**10** from the previous feature selection process).
+
+**Classes**: Set to **1** for binary classification, indicating the number of output classes.
+
+## Model Training Configuration
+
+**Optimizer**: We employed the [Adam][Adam-link] optimizer.
+
+**Loss Function**: We utilized the [Binary Cross-Entropy Loss][BCELoss-link] function.
+
+**Learning Rate**: **0.001**
+
+**Batch Size**: We opted for a batch size of **64** for computational efficiency.
+
+**Number of Epochs**: The model was trained for **30** epochs.
 
 
-## Models Used
+## Results
 
-- Artificial Neural Networks (ANN)
-- Convolutional Neural Networks (CNN)
-- CNN with Long Short-Term Memory (LSTM) layer
-- Decision Tree
-- Random Forest
+The CNN-LSTM model achieved remarkable results, boasting an impressively low loss of **0.0018** and a staggering accuracy of **99.945%** on the tabular dataset. These outcomes demonstrate the effectiveness of combining convolutional neural networks (CNNs) with long short-term memory (LSTM) networks. 
 
+More specifically, the [confusion matrix][confusion-matrix-link] and the [classification report][classification-report-link] resulting from the validation of the CNN-LSTM model are:
 
+<p align="center">
+ <img src="./images_media/confusion_matrix_cnn_lstm.png"  alt="CNN-LSTM Confusion Matrix" width = 50%>
+    <br>
+    <em><i>Confusion Matrix of CNN-LSTM Classifier</i></em>
+</p>
+<br>
 
+``Classification Report``
 
- such that they have a mean of 0 and a standard deviation of 1. 
+|            | Precision |  Recall  | F1-Score | Support |
+|------------|-----------|----------|----------|---------|
+|   Benign   |   0.999875   |   0.998684  |   0.999279  |  95774  |
+| Malicious  |   0.999146   |   0.999919  |   0.999532  | 147404  |
+|   Accuracy |           |          |   0.999433  | 243178  |
+|  Macro Avg |   0.999510   |   0.999301  |   0.999406  | 243178  |
+| Weighted Avg|  0.999433   |   0.999433  |   0.999432  | 243178  |
+
+<br>
+<p align="center">
+ <img src="./images_media/acc_loss_cnn_lstm.png"  alt="CNN-LSTM Acc Loss Plot">
+    <br>
+    <em><i>Evolution of Accuracy and Loss for CNN-LSTM Model During Epochs</i></em>
+</p>
+<br>
+
+Despite requiring more training time due to its complexity, the CNN-LSTM hybrid model effectively combined CNNs for spatial feature extraction and LSTMs for capturing temporal dependencies,  resulting in even better performance compared to the standalone ANN and CNN models.
+
+## Stratified K-Fold Cross Validation
+
+As in previous cases (ANN and CNN), we applied [Stratified K-fold Cross-Validation][StrK-Fold-CV-link] (in our case K = 5) to ensure robust evaluation of the models' performance. This approach provides a comprehensive assessment of the models' generalization capabilities across different subsets of the dataset, mitigating the risk of overfitting and yielding more reliable performance metrics.
+
+The results we obtained were as follows:
+
+<br>
+<p align="center">
+ <img src="./images_media/acc_loss_kfold_cnn_lstm.png"  alt="CNN-LSTM Acc Loss K-Fold Plot">
+    <br>
+    <em><i>Evolution of Accuracy and Loss for CNN-LSTM Model During Epochs at Stratified 5-Fold Cross Validation</i></em>
+</p>
+<br>
+
+The results obtained through [Stratified K-fold Cross-Validation][StrK-Fold-CV-link] demonstrate the **consistency** and **generalization** ability of the CNN-LSTM model across different subsets of the dataset. The high accuracy and low loss consistently achieved across multiple folds indicate robust performance and **minimal overfitting**.
+
 ## Deployment to Kubernetes (k8s) Cluster
 
 The intrusion detection service has been deployed to a Kubernetes cluster to ensure scalability, availability, and ease of management, using two replicas of a fastapi server with one endpoint for prediction of the network flow.
 
-
-## Installation
-
-```bash
-# Clone the repo
-git clone https://github.com/DmMeta/5G_Intrusion_detection.git
-
-# Navigate into the directory
-cd 5G_Intrusion_detection
-
-# Install dependencies
-pip3 install .
-
-
-```
 # Contact
 
 ### Authors:
@@ -571,3 +692,5 @@ Distributed under the [MIT] License. See `LICENSE.md` for more details.
 [script-data]: /scripts/fetch_data.sh
 [script-models]: /scripts/fetch_models.sh
 [script-folder]: /scripts/
+[decision-tree-classifier-repr]: /images_media/repr_decision_tree.png
+[random-forest-classifier-repr]: /images_media/repr_random_forest.png
