@@ -24,7 +24,7 @@
 * [CNN](#cnn)
 * [CNN-LSTM](#cnn-lstm)
 * [Endpoint Development using Docker Container](#endpoint-development-using-docker-container)
-* [Deployment to K8s Cluster](#deployment-to-k8s-cluster)
+* [Deployment to Kubernetes (K8s) Cluster](#deployment-to-kubernetes-k8s-cluster)
 * [Contact](#contact)
 * [License](#license)
 
@@ -69,9 +69,9 @@ pip3 install .
 # Dataset and Feature Selection
 
 ## The significant role of the Feature Selection 
-Before feeding data into machine learning (ML) models, **feature selection** plays a pivotal role. In today's era of massive and heterogeneous networks, where copious amounts of data are generated, the need for efficient processing and storage is paramount. As such, selecting and extracting the most pertinent features is a common practice in ML model training, leading to significant reductions in training times and improved learning efficiency.
+Before feeding data into machine learning (ML) models, **feature selection** plays a pivotal role. In today's era of massive and heterogeneous networks, where copious amounts of data are generated, the need for efficient processing and storage is more than important. As such, selecting and extracting the most important features is a common practice before ML model training, leading to significant reductions in training times and improved learning efficiency.
 
-Feature selection involves choosing a subset of features from the original dataset using various techniques like **filter**, **wrapper** and **embedded** methods. In our approach, we employed the filter method due to its statistical approach, which ensures generality across different ML models. This method operates independently of specific model characteristics or parameters, making it versatile and robust.
+Feature selection involves choosing a subset of features from the original dataset using various techniques like **filter**, **wrapper** and **embedded** methods. In our case study, we employed the filter method due to its statistical approach, which ensures **generality** across different ML models. This method operates independently of specific model characteristics or parameters, making it **versatile** and **robust**.
 
 Before applying statistical-based filter methods for feature selection, we conducted preliminary steps. Initially, to maintain the generality of the intrusion detection system, we eliminated features like source - destination IP addresses and ports, as attacks could be uniquely identified with their presence. Subsequently, we removed obvious irrelevant features such as those with **null**, **zero** or **constant** values across all data points. 
 
@@ -88,7 +88,7 @@ Regarding the target variable **Label**, its distribution is depicted in the fol
 </p>
 </br> 
 
-After removing columns containing irrelevant features, the initial dataset's feature count was reduced from 113 to **106**. Following this, the feature selection process continued as follows:
+After removing columns containing irrelevant features, the initial dataset's feature count was reduced from 113 to **106**. The feature selection process continued as follows:
 
 - **NaN Columns Removal**: Columns with a high percentage of NaN values (threshold: 95%) were identified and eliminated. This step reduced the dataset's feature count to **70**.
 
@@ -96,7 +96,7 @@ After removing columns containing irrelevant features, the initial dataset's fea
 
 - **Constant Columns Removal**: Finally, columns with constant values were removed, resulting in a final feature count of **51**.
 
-Following the refinement of the feature set, we tackled the issue of **redundant features**. If multiple features display a comparable relationship with the output label, they are deemed redundant, necessitating the retention of only one representative feature from this cohort. By eliminating redundant features, we enhanced the dataset's efficiency without compromising data quality. To achieve this, we utilized the **Pearson correlation coefficient**.
+Following the refinement of the feature set, we tackled the issue of **redundant features**. If multiple features display a similar relationship among themselves, they are redundant, requiring the preservation of only one representative feature from this group. By eliminating redundant features, we enhanced the dataset's efficiency without compromising data quality. To achieve this, we utilized the **Pearson correlation coefficient**.
 
 The Pearson correlation coefficient is a statistical measure used to determine the strength and direction of the linear relationship between two variables. In the context of intrusion detection, it's employed to identify correlations between different features in the dataset and assess their relevance to the classification task. Features with a high correlation to the target variable (malicious or benign) are likely to be more informative for the models and are thus selected.
 
@@ -318,7 +318,7 @@ class ANN_BinaryClassifier(nn.Module):
 
 **Loss Function**: For this binary classification problem, we utilized the [Binary Cross-Entropy Loss][BCELoss-link] function (BCELoss). This loss function is well-suited for binary classification problems, measuring the dissimilarity between the model's predictions and the actual labels.
 
-**Learning Rate**: The learning rate was set to **0.001**, which is a commonly used initial learning rate for Adam optimization. This value controls the step size during parameter updates and influences the speed and stability of the training process. Additionally, we could consider implementing learning rate schedulers, such as the Nestorov (Momentum) scheduler, to dynamically adjust the learning rate during training based on certain criteria, providing further fine-tuning capabilities and potentially enhancing model performance.
+**Learning Rate**: The learning rate was set to **0.001**, which is a commonly used initial learning rate for Adam optimization. This value controls the step size during parameter updates and influences the speed and stability of the training process. Additionally, we could consider implementing learning rate schedulers, such as the  Exponential Decay, StepLR and Cosine Annealing LR, to dynamically adjust the learning rate during training based on certain criteria, providing further fine-tuning capabilities and potentially enhancing model performance.
 
 **Batch Size**: We used a batch size of **32** for training the model. Batch size determines the number of samples processed before updating the model's parameters. A smaller batch size can lead to more frequent updates and potentially faster convergence, while a larger batch size can provide more stable updates.
 
@@ -453,15 +453,15 @@ class CNN_BinaryClassifier(nn.Module):
 
 **Loss Function**: We utilized the [Binary Cross-Entropy Loss][BCELoss-link] function (BCELoss).
 
-**Learning Rate**: Governs optimization step size, impacting training convergence and stability. Our choice of **0.001** aligns with common practices for Adam optimization.
+**Learning Rate**: **0.001**
 
 **Batch Size**: We opted for a batch size of **64** for computational efficiency.
 
-**Number of Epochs**: The model was trained for **30** epochs. An epoch refers to one complete pass through the entire training dataset. Training for multiple epochs allows the model to learn from the data multiple times, improving its performance over time.
+**Number of Epochs**: The model was trained for **30** epochs. 
 
 ## Results
 
-After evaluating the CNN model, we achieved impressive metrics. The accuracy of our model was **99.9%**, while the loss was remarkably low, registering only **0.0041**. These results demonstrate the effectiveness and generalization capability of our model across different datasets.
+After evaluating the CNN model, we achieved remarkable results. The accuracy of our model was **99.9%**, while the loss was remarkably low, registering only **0.0041**. 
 
 Following the evaluation, the resulting [confusion matrix][confusion-matrix-link] and [classification report][classification-report-link] are as follows:
 
@@ -490,7 +490,7 @@ Following the evaluation, the resulting [confusion matrix][confusion-matrix-link
 </p>
 <br>
 
-After evaluating the CNN model, we can confidently assert its effectiveness in tackling the binary classification task. With precision, recall and F1-score metrics exceeding 99%, along with an impressive accuracy of nearly 99.93%, the model demonstrates remarkable performance in distinguishing between the two classes. These results underscore the CNN's capability to learn intricate patterns and features from tabular data, showcasing its potential for various classification tasks beyond image analysis.
+After evaluating the CNN model, we can confidently assert its effectiveness in tackling the binary classification task. With precision, recall and F1-score metrics exceeding 99%, along with an impressive accuracy of nearly 99.93%, the model demonstrates remarkable performance in distinguishing between the two classes. 
  
  Βeing a more complex architecture tailored for image data, the CNN model demonstrates superior performance compared to the ANN model. This superiority can be attributed to the CNN's ability to capture intricate spatial hierarchies and local patterns within the tabular data, which might have been overlooked by the simpler ANN architecture.
 
@@ -583,11 +583,11 @@ class CNN_LSTM_BinaryClassifier(nn.Module):
 
 ## Model Parameters
 
-**Input Channels**: Typically set to **1** for tabular data, representing the number of input channels.
+**Input Channels**: Typically set to **1** for tabular data.
 
-**Kernels**: The count of kernels or filters in the convolutional layer, dictating the depth of feature maps learned by the network. We have **16** kernels in our convolutional layer.
+**Kernels**: We have **16** kernels in our convolutional layer.
 
-**Kernel Size**: Specifies the size of convolutional kernels, determining the receptive field over input data. Each kernel has a size of **3**.
+**Kernel Size**: Each kernel has a size of **3**.
 
 **LSTM Hidden Size**: The number of features in the hidden state of the LSTM. We set it to **8**.
 
@@ -612,7 +612,7 @@ class CNN_LSTM_BinaryClassifier(nn.Module):
 
 ## Results
 
-The CNN-LSTM model achieved remarkable results, boasting an impressively low loss of **0.0018** and a staggering accuracy of **99.945%** on the tabular dataset. These outcomes demonstrate the effectiveness of combining convolutional neural networks (CNNs) with long short-term memory (LSTM) networks. 
+The CNN-LSTM model achieved great results, boasting an impressively low loss of **0.0018** and an accuracy of **99.945%** on the tabular dataset. These outcomes demonstrate the effectiveness of combining convolutional neural networks (CNNs) with long short-term memory (LSTM) networks. 
 
 More specifically, the [confusion matrix][confusion-matrix-link] and the [classification report][classification-report-link] resulting from the validation of the CNN-LSTM model are:
 
@@ -659,16 +659,72 @@ The results we obtained were as follows:
 
 The results obtained through [Stratified K-fold Cross-Validation][StrK-Fold-CV-link] demonstrate the **consistency** and **generalization** ability of the CNN-LSTM model across different subsets of the dataset. The high accuracy and low loss consistently achieved across multiple folds indicate robust performance and **minimal overfitting**.
 
-## Deployment to Kubernetes (k8s) Cluster
+# Endpoint Development using Docker Container
+
+By properly composing a [Dockerfile][Dockerfile-link] and constructing the corresponding [Docker][docker-link] container, we have developed a local API endpoint utilizing the [FastAPI][fastapi-link] web framework. This endpoint receives HTTP requests with tabular input data(with [JSON][JSON-link] format via the JSON parameter of HTTP), performs predictions using appropriate pretrained ML models (the models mentioned above) and returns the resulting predictions. Specifically, the client initially specifies the desired model for predictions and provides the corresponding input data through an HTTP request. Subsequently, the server receives the request, executes appropriate preprocessing on the data, loads the relevant pretrained model and makes predictions on the user's input data. Finally, these predictions are returned to the client as a response to the HTTP request.
+
+The structure of the data (specification of the desired model and insertion of tabular input samples) in the HTTP request sent by the client to the server has the following indicative [JSON][JSON-link] format:
+```python
+{
+    "model": "ANN", # The model field can have one of the following values: RandomForest, DecisionTree, ANN, CNN, CNN_LSTM
+    "query": [
+        {   
+            # Values for the first input sample        
+            "feature1": 0.2,
+            "feature2": 0.5,
+            "feature3": 0.1,
+            ...
+        },
+        {   
+            # Values for the second input sample
+            "feature1": 0.1,
+            "feature2": 0.3,
+            "feature3": 0.6,
+            ...
+        }
+    ]
+    ...
+}
+```
+
+##  Building and Launching the Docker container
+
+For setting up and launching the Docker container (which will function as the server), the following commands should be run:
+
+Firstly, we need to build the Docker image that will be subsequently used for creating the Docker container:
+```bash
+# Αssume we are in the project's folder -> /5G_Intrusion_detection
+docker build -t mlapi_img:v0.1 .
+```
+Next, we create and start the Docker container as follows:
+```bash
+docker run -d --name mlapi_server -p 8891:8891 mlapi_img:v0.1
+```
+The above command creates and starts a Docker container named ``mlapi_server``. It uses the Docker image tagged ``mlapi_img:v0.1``. By specifying -p 8891:8891, it maps port **8891 of the host machine** to port **8891(which has already been exposed by the [Dockerfile][Dockerfile-link] we created) of the Docker container**. This allows communication between the host and the services running inside the container. Finally, the -d flag runs the container in detached mode, meaning it runs in the background.
+
+## Checking the functionality of the API endpoint
+
+For checking the operation of the API endpoint, we have created the [predict_test][predict-test-link] file. This file allows specifying the **desired pretrained model** and the **number of samples** to be sent to the server to perform the corresponding predictions. These samples are taken from a test dataset that can be retrieved by executing the [fetch_data][script-data] script, as mentioned earlier. When the server returns the prediction values, the corresponding classification report is generated and printed.
+
+## Demonstration 
+
+Following is a demo video demonstrating the execution of all the aforementioned commands and the testing of the API endpoint:
+
+![](./images_media/demo_exec.gif)
+
+
+
+
+# Deployment to Kubernetes (K8s) Cluster
 
 The intrusion detection service has been deployed to a Kubernetes cluster to ensure scalability, availability, and ease of management, using two replicas of a fastapi server with one endpoint for prediction of the network flow.
 
 # Contact
 
-### Authors:
+## Authors:
 
 - Metaxakis Dimitris | <a href="mailto:d.metaxakis@ac.upatras.gr">d.metaxakis@ac.upatras.gr</a>
-- Sofotasios Argiris | <a href="mailto:up1079616@ac.upatras.gr">up1079616@ac.upatras.gr</a>
+- Sofotasios Argiris | <a href="mailto:a.sofotasios@ac.upatras.gr">a.sofotasios@ac.upatras.gr</a>
 
 
 # License
@@ -694,3 +750,8 @@ Distributed under the [MIT] License. See `LICENSE.md` for more details.
 [script-folder]: /scripts/
 [decision-tree-classifier-repr]: /images_media/repr_decision_tree.png
 [random-forest-classifier-repr]: /images_media/repr_random_forest.png
+[Dockerfile-link]: /Dockerfile
+[fastapi-link]: https://fastapi.tiangolo.com/
+[JSON-link]: https://www.json.org/json-en.html
+[docker-link]: https://www.docker.com/
+[predict-test-link]: /tests/predict_test.py
