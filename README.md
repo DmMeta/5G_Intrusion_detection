@@ -2,12 +2,14 @@
 <br>
 <img src="./images_media/danger_logo.png" alt="logo" style="width:200px;margin-bottom:4vh">
 <br>
-<strong>Intrusion Detection using Machine Learning</strong>
+<strong>Securing 5G Networks: A Machine Learning Approach to Intrusion Detection</strong>
 </h1>
 
 
 <h3 align="center">
-<i>Implementation of machine learning models (pipelines) for detecting malicious intrusions.</i>
+<i>This repo delves into the development and implementation of multiple machine learning models, designed to detect malicious network flow.
+Leveraging a simulated 5G network dataset for training and validation, these models span from tree-based to deep learning methods, each meticulously designed to identify potential intrusions. 
+In addition, they are also integrated as part of a service deployed on a K8s cluster (based on Docker containers), demonstrating a practical application of advanced technology in addressing a real-world network challenge.</i>
 </h3>
 <br>
 
