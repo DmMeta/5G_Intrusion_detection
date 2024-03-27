@@ -2,12 +2,14 @@
 <br>
 <img src="./images_media/danger_logo.png" alt="logo" style="width:200px;margin-bottom:4vh">
 <br>
-<strong>Intrusion Detection using Machine Learning</strong>
+<strong>Securing 5G Networks: A Machine Learning Approach to Intrusion Detection</strong>
 </h1>
 
 
 <h3 align="center">
-<i>Implementation of machine learning models (pipelines) for detecting malicious intrusions.</i>
+<i>This repo delves into the development and implementation of multiple machine learning models, designed to detect malicious network flow.
+Leveraging a simulated 5G network dataset for training and validation, these models span from tree-based to deep learning methods, each meticulously designed to identify potential intrusions. 
+In addition, they are also integrated as part of a service deployed on a K8s cluster (based on Docker containers), demonstrating a practical application of advanced technology in addressing a real-world network challenge.</i>
 </h3>
 <br>
 
@@ -69,7 +71,7 @@ pip3 install .
 # Dataset and Feature Selection
 
 ## The significant role of the Feature Selection 
-Before feeding data into machine learning (ML) models, **feature selection** plays a pivotal role. In today's era of massive and heterogeneous networks, where copious amounts of data are generated, the need for efficient processing and storage is more than important. As such, selecting and extracting the most important features is a common practice before ML model training, leading to significant reductions in training times and improved learning efficiency.
+Before feeding data into Machine Learning (ML) models, **feature selection** plays a pivotal role. In today's era of massive and heterogeneous networks, where copious amounts of data are generated, the need for efficient processing and storage is more than important. As such, selecting and extracting the most important features is a common practice before ML model training, leading to significant reductions in training times and improved learning efficiency.
 
 Feature selection involves choosing a subset of features from the original dataset using various techniques like **filter**, **wrapper** and **embedded** methods. In our case study, we employed the filter method due to its statistical approach, which ensures **generality** across different ML models. This method operates independently of specific model characteristics or parameters, making it **versatile** and **robust**.
 
@@ -112,7 +114,7 @@ In our analysis, we considered the absolute values of the correlation coefficien
 
 Following the application of the aforementioned procedure, the number of features in the dataset decreased to **36**.
 
-After removing all redundant features, we utilized the **ANOVA F-value** to identify the top **10**(remaining) features.
+After removing all redundant features, we utilized the **ANOVA F-value** to identify the top **10** (remaining) features.
 
 The ANOVA (Analysis of Variance) F-score is a statistical technique used to compare the means of two or more groups to determine if they are significantly different from each other. Features with high F-statistics and low p-values are considered more important for classification.
 
@@ -236,7 +238,7 @@ The architecture of our ANN comprises:
 
 **Input Layer**: This layer serves as the initial gateway for receiving raw data, consisting of a fixed number of features (10 from above feature selection process). Each feature encapsulates a unique attribute-characteristic of the input samples.
 
-**Hidden Layer**: Situated at the core of the model, the hidden layer is densely populated with interconnected neurons. Each neuron is intricately linked to every neuron in the preceding layer(fully connected(FC) layer). The number of neurons in this layer, known as the hidden_size, is meticulously specified to balance model complexity and performance.
+**Hidden Layer**: Situated at the core of the model, the hidden layer is densely populated with interconnected neurons. Each neuron is intricately linked to every neuron in the preceding layer (fully connected layer). The number of neurons in this layer, known as the hidden_size, is meticulously specified to balance model complexity and performance.
 
 **Activation Function (ReLU)**: After the first linear transformation (which is the fully connected layer from the input to the hidden layer), we apply the Rectified Linear Unit (ReLU) activation function (to the output of the first linear layer before passing it to the next layer). Renowned for its capability to introduce non-linearity, ReLU plays a crucial role in enabling the model to discern intricate patterns and relationships within the data. Additionally, ReLU helps alleviate the issue of the vanishing gradient, which can impede the training process in deeper neural networks by allowing gradients to propagate more effectively during backpropagation.
 
@@ -306,7 +308,7 @@ class ANN_BinaryClassifier(nn.Module):
 
 ## Model Parameters
 
-**Input Size**: The input size corresponds to the number of features in the input data. It was determined based on the dimensionality of the input features provided to the model(**10** from the previous feature selection process).
+**Input Size**: The input size corresponds to the number of features in the input data. It was determined based on the dimensionality of the input features provided to the model (**10** from the previous feature selection process).
 
 **Hidden Size**: The hidden size represents the number of neurons in the hidden layer of the neural network. In our case, we used a hidden size of **8**.
 
@@ -661,7 +663,7 @@ The results obtained through [Stratified K-fold Cross-Validation][StrK-Fold-CV-l
 
 # Endpoint Development using Docker Container
 
-By properly composing a [Dockerfile][Dockerfile-link] and constructing the corresponding [Docker][docker-link] container, we have developed a local API endpoint utilizing the [FastAPI][fastapi-link] web framework. This endpoint receives HTTP requests with tabular input data(with [JSON][JSON-link] format via the JSON parameter of HTTP), performs predictions using appropriate pretrained ML models (the models mentioned above) and returns the resulting predictions. Specifically, the client initially specifies the desired model for predictions and provides the corresponding input data through an HTTP request. Subsequently, the server receives the request, executes appropriate preprocessing on the data, loads the relevant pretrained model and makes predictions on the user's input data. Finally, these predictions are returned to the client as a response to the HTTP request.
+By properly composing a [Dockerfile][Dockerfile-link] and constructing the corresponding [Docker][docker-link] container, we have developed a local API endpoint utilizing the [FastAPI][fastapi-link] web framework. This endpoint receives HTTP requests with tabular input data (with [JSON][JSON-link] format via the JSON parameter of HTTP), performs predictions using appropriate pretrained ML models (the models mentioned above) and returns the resulting predictions. Specifically, the client initially specifies the desired model for predictions and provides the corresponding input data through an HTTP request. Subsequently, the server receives the request, executes appropriate preprocessing on the data, loads the relevant pretrained model and makes predictions on the user's input data. Finally, these predictions are returned to the client as a response to the HTTP request.
 
 The structure of the data (specification of the desired model and insertion of tabular input samples) in the HTTP request sent by the client to the server has the following indicative [JSON][JSON-link] format:
 ```python
