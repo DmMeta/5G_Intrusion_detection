@@ -8,10 +8,10 @@ RUN mkdir -p /opt/model_server/models/
 WORKDIR /opt/model_server
 COPY models/ models/
 WORKDIR /opt/model_server/src/
-COPY src/ .
 COPY ./src/server_requirements.txt .
 RUN pip3 install -r server_requirements.txt
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+COPY src/ .
 
 EXPOSE 8891
 

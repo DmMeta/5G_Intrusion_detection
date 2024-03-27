@@ -2,8 +2,10 @@ from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 import json
 from model import ModelAdapter  # Importing ModelAdapter from the model module
+from prometheus_fastapi_instrumentator import Instrumentator, metrics
 
 app = FastAPI()  # Creating a FastAPI application instance
+Instrumentator().instrument(app).expose(app)
 
 class PredictionQuery(BaseModel):
     model: str
