@@ -712,14 +712,46 @@ For checking the operation of the API endpoint, we have created the [predict_tes
 
 Following is a demo video demonstrating the execution of all the aforementioned commands and the testing of the API endpoint:
 
-![](./images_media/demo_exec.gif)
+![](./images_media/demo_exec_docker.gif)
 
 
 
 
 # Deployment to Kubernetes (K8s) Cluster
 
-The intrusion detection service has been deployed to a Kubernetes cluster to ensure scalability, availability, and ease of management, using two replicas of a fastapi server with one endpoint for prediction of the network flow.
+In our project, we leveraged **Kubernetes(K8s)** to create a robust and scalable environment for our application. [Kubernetes(K8s)][K8s-link] is a powerful open-source container orchestration platform designed to **automate** the **deployment**, **scaling** and **management** of containerized applications. It provides a comprehensive set of features for managing distributed systems and microservices, including **service discovery**, **load balancing** and **self-healing** capabilities. By deploying our services as **Pods** within a Kubernetes cluster, we ensure **high availability** and **fault tolerance**. Kubernetes enables us to easily scale our application horizontally by adding or removing replicas based on demand, ensuring **optimal resource utilization** and **performance**.
+
+We've established a [Minikube][Minikube-link] cluster (a single-node setup) with two replicas. These replicas functioned as the ``mlapi_server`` demonstrated in the preceding section. Leveraging [Docker][docker-link], which is the default platform in Minikube, we constructed Pods - Containers for this configuration.
+
+For precise control over the operation and configuration of the Pods within our Kubernetes environment, we employed the [Intrusion Detection][IntrusionDetection-link] YAML file. This file orchestrates a **Kubernetes Deployment** dubbed         ``intrusion-detection-deployment``, defining the instantiation of two replicas of the fastapi-server Pod. Each replica runs the ``detect_server:v0.3`` Docker image, serving as instances of our application (``mlapi_server``), and is accessible via port 8891.
+
+Furthermore, the YAML file incorporates a **Kubernetes Service** named ``intrusion-detection-service``. This Service streamlines the internal exposure of Pods to other components within the cluster and external access to clients. Utilizing a **LoadBalancer** type, it facilitates external access to the Pods from outside the Kubernetes cluster. The Service intelligently routes incoming traffic on port 8891 to the corresponding port of the Pods (also port 8891).
+
+##  Launching the application into the Minikube (Kubernetes - One Node) Cluster
+
+For setting up and launching the ``mlapi_server`` into the Minikube Kubernetes Cluster, the following commands should be run:
+
+Firstly, we need to build the Docker image that will be subsequently used for creating the Pods:
+```bash
+# Αssume we are in the project's folder -> /5G_Intrusion_detection
+minikube image build -t detect_server:v0.3 .
+```
+We are applying the following command in order to create an alias:
+```bash
+alias kubectl='minikube kubectl --'
+```
+Next, we apply the configuration defined in the [Intrusion Detection][IntrusionDetection-link] file to the Minikube Kubernetes cluster:
+```bash
+# Αssume we are in the project's folder -> /5G_Intrusion_detection
+kubectl apply -f IntrusionDetection.yaml
+```
+After executing these commands, the ``mlapi_server`` will be built as a Docker image and deployed into the Minikube Kubernetes cluster, where it will be ready for use.
+
+## Demonstration 
+
+Following is a demonstration video showcasing the execution of all the aforementioned commands and the testing of the API endpoint, using the [predict_test][predict-test-link] file, the functionality of which was previously discussed:
+
+![](./images_media/demo_exec_k8s.gif)
 
 # Contact
 
@@ -757,3 +789,6 @@ Distributed under the [MIT] License. See `LICENSE.md` for more details.
 [JSON-link]: https://www.json.org/json-en.html
 [docker-link]: https://www.docker.com/
 [predict-test-link]: /tests/predict_test.py
+[K8s-link]: https://kubernetes.io/
+[Minikube-link]: https://minikube.sigs.k8s.io/docs/
+[IntrusionDetection-link]: /IntrusionDetection.yaml
