@@ -167,7 +167,7 @@ Together, these results provide a comprehensive assessment of the Random Forest 
 After conducting the experiment, the resulting confusion matrix was:
 
 <p align="center">
- <img src="./images_media/confusion_matrix_rf.png"  alt="Random Forest Confusion Matrix" width = 50%>
+ <img src="./images_media/confusion_matrix_rf.png"  alt="Random Forest Confusion Matrix" width = 60%>
     <br>
     <em><i>Confusion Matrix of Random Forest Classifier</i></em>
 </p>
@@ -206,7 +206,7 @@ Following the evaluation of the Decision Tree Classifier, we achieved an accurac
 Here are the resulted [confusion matrix][confusion-matrix-link] and [classification report][classification-report-link]:
 
 <p align="center">
- <img src="./images_media/confusion_matrix_dt.png"  alt="Decision Tree Confusion Matrix" width = 50%>
+ <img src="./images_media/confusion_matrix_dt.png"  alt="Decision Tree Confusion Matrix" width = 60%>
     <br>
     <em><i>Confusion Matrix of Decision Tree Classifier</i></em>
 </p>
@@ -333,7 +333,7 @@ After training the ANN model, we evaluate its performance using various metrics.
 The [confusion matrix][confusion-matrix-link] and [classification report][classification-report-link] obtained from the evaluation of the ANN model are as follows:
 
 <p align="center">
- <img src="./images_media/confusion_matrix_ann.png"  alt="ANN Confusion Matrix" width = 50%>
+ <img src="./images_media/confusion_matrix_ann.png"  alt="ANN Confusion Matrix" width = 60%>
     <br>
     <em><i>Confusion Matrix of ANN Classifier</i></em>
 </p>
@@ -468,7 +468,7 @@ After evaluating the CNN model, we achieved remarkable results. The accuracy of 
 Following the evaluation, the resulting [confusion matrix][confusion-matrix-link] and [classification report][classification-report-link] are as follows:
 
 <p align="center">
- <img src="./images_media/confusion_matrix_cnn.png"  alt="CNN Confusion Matrix" width = 50%>
+ <img src="./images_media/confusion_matrix_cnn.png"  alt="CNN Confusion Matrix" width = 60%>
     <br>
     <em><i>Confusion Matrix of CNN Classifier</i></em>
 </p>
@@ -619,7 +619,7 @@ The CNN-LSTM model achieved great results, boasting an impressively low loss of 
 More specifically, the [confusion matrix][confusion-matrix-link] and the [classification report][classification-report-link] resulting from the validation of the CNN-LSTM model are:
 
 <p align="center">
- <img src="./images_media/confusion_matrix_cnn_lstm.png"  alt="CNN-LSTM Confusion Matrix" width = 50%>
+ <img src="./images_media/confusion_matrix_cnn_lstm.png"  alt="CNN-LSTM Confusion Matrix" width = 60%>
     <br>
     <em><i>Confusion Matrix of CNN-LSTM Classifier</i></em>
 </p>
