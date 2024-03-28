@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: fastapi-server
-        image: detect_server:v0.1
+        image: detect_server:v0.3
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8891
