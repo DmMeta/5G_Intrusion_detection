@@ -34,7 +34,7 @@ In addition, they are also integrated as part of a service deployed on a K8s clu
 # About the Project
 This project involves the implementation of various machine learning models for intrusion detection in a 5G network simulation. The task is to classify network traffic as ```benign``` or ```malicious``` based on the [NIDD][NIDD-link] dataset. 
 
-The current project was carried out as a part of [CEID's][CEID-link] course "5G Architectures, Technologies, Applications and Key Performance Indicators (KPIs)" taught by Prof. Christos Verykoukis.
+The current project was carried out as a part of [CEID's][CEID-link] course "5G Architectures, Technologies, Applications and Key Performance Indicators (KPIs)" taught by Prof. Christos Verikoukis.
 
 # Installation
 
@@ -445,7 +445,7 @@ class CNN_BinaryClassifier(nn.Module):
 
 **Kernel Size**: Specifies the size of convolutional kernels, determining the receptive field over input data. Each kernel has a size of **3**.
 
-**Input Features**: The input features corresponds to the number of features in the input data. It was determined based on the dimensionality of the input features provided to the model(**10** from the previous feature selection process).
+**Input Features**: The input features correspond to the number of features in the input data. It was determined based on the dimensionality of the input features provided to the model (**10** from the previous feature selection process).
 
 **Classes**: Set to **1** for binary classification, indicating the number of output classes.
 
@@ -702,7 +702,7 @@ Next, we create and start the Docker container as follows:
 ```bash
 docker run -d --name mlapi_server -p 8891:8891 mlapi_img:v0.1
 ```
-The above command creates and starts a Docker container named ``mlapi_server``. It uses the Docker image tagged ``mlapi_img:v0.1``. By specifying -p 8891:8891, it maps port **8891 of the host machine** to port **8891(which has already been exposed by the [Dockerfile][Dockerfile-link] we created) of the Docker container**. This allows communication between the host and the services running inside the container. Finally, the -d flag runs the container in detached mode, meaning it runs in the background.
+The above command creates and starts a Docker container named ``mlapi_server``. It uses the Docker image tagged ``mlapi_img:v0.1``. By specifying -p 8891:8891, it maps port **8891 of the host machine** to port **8891 (which has already been exposed by the [Dockerfile][Dockerfile-link] we created) of the Docker container**. This allows communication between the host and the services running inside the container. Finally, the -d flag runs the container in detached mode, meaning it runs in the background.
 
 ## Checking the functionality of the API endpoint
 
@@ -719,9 +719,9 @@ Following is a demo video demonstrating the execution of all the aforementioned 
 
 # Deployment to Kubernetes (K8s) Cluster
 
-In our project, we leveraged **Kubernetes(K8s)** to create a robust and scalable environment for our application. [Kubernetes(K8s)][K8s-link] is a powerful open-source container orchestration platform designed to **automate** the **deployment**, **scaling** and **management** of containerized applications. It provides a comprehensive set of features for managing distributed systems and microservices, including **service discovery**, **load balancing** and **self-healing** capabilities. By deploying our services as **Pods** within a Kubernetes cluster, we ensure **high availability** and **fault tolerance**. Kubernetes enables us to easily scale our application horizontally by adding or removing replicas based on demand, ensuring **optimal resource utilization** and **performance**.
+In our project, we utilized **Kubernetes (K8s)** to create a robust and scalable environment for our application. [Kubernetes (K8s)][K8s-link] is a powerful open-source container orchestration platform designed to **automate** the **deployment**, **scaling** and **management** of containerized applications. It provides a comprehensive set of features for managing distributed systems and microservices, including **service discovery**, **load balancing** and **self-healing** capabilities. By deploying our services as **Pods** within a Kubernetes cluster, we ensure **high availability** and **fault tolerance**. Kubernetes enables us to easily scale our application horizontally by adding or removing replicas based on demand, ensuring **optimal resource utilization** and **performance**.
 
-We've established a [Minikube][Minikube-link] cluster (a single-node setup) with two replicas. These replicas functioned as the ``mlapi_server`` demonstrated in the preceding section. Leveraging [Docker][docker-link], which is the default platform in Minikube, we constructed Pods - Containers for this configuration.
+We've established a [Minikube][Minikube-link] cluster (a single-node setup) with two replicas. These replicas functioned as the ``mlapi_server`` demonstrated in the preceding section. Utilizing [Docker][docker-link], which is the default platform in Minikube, we constructed Pods - Containers for this configuration.
 
 For precise control over the operation and configuration of the Pods within our Kubernetes environment, we employed the [Intrusion Detection][IntrusionDetection-link] YAML file. This file orchestrates a **Kubernetes Deployment** dubbed         ``intrusion-detection-deployment``, defining the instantiation of two replicas of the fastapi-server Pod. Each replica runs the ``detect_server:v0.3`` Docker image, serving as instances of our application (``mlapi_server``), and is accessible via port 8891.
 
@@ -735,10 +735,6 @@ Firstly, we need to build the Docker image that will be subsequently used for cr
 ```bash
 # Αssume we are in the project's folder -> /5G_Intrusion_detection
 minikube image build -t detect_server:v0.3 .
-```
-We are applying the following command in order to create an alias:
-```bash
-alias kubectl='minikube kubectl --'
 ```
 Next, we apply the configuration defined in the [Intrusion Detection][IntrusionDetection-link] file to the Minikube Kubernetes cluster:
 ```bash
