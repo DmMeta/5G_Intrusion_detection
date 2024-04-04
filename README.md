@@ -133,7 +133,7 @@ In the second method, **Principal Component Analysis (PCA)** was utilized. PCA i
 ## Importance of Data Preprocessing
 Data preprocessing is a critical step in preparing datasets for machine learning models. It involves **cleaning**, **transforming** and **organizing** data to ensure its **quality** and **suitability** for analysis. By addressing issues such as missing values and scaling, data preprocessing improves the **accuracy** and **efficiency** of machine learning algorithms.
 
-## Description of the Data Preprocessing process
+## Description of the Data Preprocessing phasis
 To prepare our data for analysis, we implemented a series of preprocessing steps. 
 
 Initially, we addressed missing values by filling in numerical features with their ***mean*** values and categorical features with their ***most frequent*** values. This ensured that our dataset was complete and ready for further analysis.
