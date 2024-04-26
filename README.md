@@ -225,6 +225,15 @@ Here are the resulted [confusion matrix][confusion-matrix-link] and [classificat
 
 Comparing these results with those of the Random Forest, both classifiers exhibited similar performance, indicating that the Decision Tree Classifier could be a viable alternative to the Random Forest. This indicates that the problem at hand may not be overly complex. However, it's noteworthy that due to its simple internal structure, the Decision Tree classifier executed significantly **faster** than the Random Forest.
 
+Attached is a figure depicting the training and testing durations of both models:
+
+<p align="center">
+ <img src="./images_media/rndfor_dectree_time_metrics.png"  alt="Decision Tree - Random Forest Time Bar Plot" width = 60%>
+    <br>
+    <em><i>Comparison of Training and Testing Durations between Decision Tree and Random Forest Classifiers</i></em>
+</p>
+<br>
+
 > [!NOTE]
 > Both classifiers (Decision Tree and Random Forest) were subjected to K-Fold Cross-Validation, confirming their robust, accurate and strong performance.
 
@@ -644,6 +653,15 @@ More specifically, the [confusion matrix][confusion-matrix-link] and the [classi
 <br>
 
 Despite requiring more training time due to its complexity, the CNN-LSTM hybrid model effectively combined CNNs for spatial feature extraction and LSTMs for capturing temporal dependencies,  resulting in even better performance compared to the standalone ANN and CNN models.
+
+Attached is a figure depicting the training and testing durations of the three neural network models mentioned earlier:
+
+<p align="center">
+ <img src="./images_media/nn_time_metrics.png"  alt="ANN-CNN-LSTM_CNN Time Bar Plot" width = 60%>
+    <br>
+    <em><i>Comparison of Training and Testing Durations between the ANN, CNN and CNN-LSTM model</i></em>
+</p>
+<br>
 
 ## Stratified K-Fold Cross Validation
 
